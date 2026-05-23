@@ -1,5 +1,6 @@
 import { merge } from 'webpack-merge';
 import MiniCssExtractPlugin, { loader as _loader } from 'mini-css-extract-plugin';
+import sass from 'sass';
 import common from './webpack.common';
 
 export default merge(common, {
@@ -16,8 +17,18 @@ export default merge(common, {
             // loading SASS
             {
                 test: /\.(s[ca]ss$)/,
-                use: [_loader, 'css-loader', 'sass-loader']
-            }
+                use: [
+                    _loader,
+                    'css-loader',
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            implementation: sass,
+                            api: 'modern',
+                        },
+                    },
+                ],
+            },
         ]
     },
     plugins: [

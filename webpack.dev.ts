@@ -1,5 +1,6 @@
 import { merge } from 'webpack-merge';
 import ESLintPlugin from 'eslint-webpack-plugin';
+import sass from 'sass';
 import common from './webpack.common';
 import 'webpack-dev-server';
 
@@ -18,8 +19,18 @@ export default merge(common, {
             // loading SASS
             {
                 test: /\.(s[ca]ss$)/,
-                use: ['style-loader', 'css-loader', 'sass-loader']
-            }
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            implementation: sass,
+                            api: 'modern',
+                        },
+                    },
+                ],
+            },
         ]
     },
     plugins: [
